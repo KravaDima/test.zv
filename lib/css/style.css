@@ -1,0 +1,35 @@
+*{ margin: 0; padding: 0; }
+div#show{ display: none; margin-top: 1em; }
+.container{ margin: 0; padding: 0; }
+div.view{ height: 100%; overflow: scroll; }
+div.view ul{ 
+	list-style: none; 
+	width: 10000px;
+}
+div.view li{ float: left; }
+div.view img{width: 100%}
+/* Форма входа */
+#frmLogin
+{
+	position: absolute;
+	padding: 15px;
+	min-width: 300px;
+	top: 10%;
+	left: 30%;
+	/*width: 15em;*/
+	background-color: white;
+	display: none;
+}
+
+#frmLogin div
+{
+	margin: 1ex;
+	padding-bottom: 1em;
+}
+
+#frmLogin div label
+{
+	display: block;
+	float: left;
+	width: 4em;
+}

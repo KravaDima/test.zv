@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Test ZV</title>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="lib/css/bootstrap.min.css" rel="stylesheet">
+    <link href="lib/css/style.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/js/xmlhttprequest.js"></script>
+    <script src="lib/js/bootstrap.min.js"></script>
+    <script>
+		var myImgAlt = "Картинка номер ";
+		var aImgs = [
+			{alt : myImgAlt + "1", src: "img/red.gif", },
+			{alt : myImgAlt + "2", src: "img/green.gif", },
+			{alt : myImgAlt + "3", src: "img/blue.gif", },
+			{alt : myImgAlt + "4", src: "img/yellow.gif", },
+		];
+	</script>
+	<script type="text/javascript">
+		function UserInfo() {
+			this.email = "";
+			this.phone = "";
+		}
+		// Отображение  исокрытие формы для ввода данных
+		function showLoginForm(){
+			document.body.style.backgroundColor = "silver";
+			document.getElementById("frmLogin").style.display = "block";
+		}
+		// Функция проверки введеных данных
+		var validate;
+		function validateUser(){
+			var email = document.getElementById("txtEmail").value;
+			var phone = document.getElementById("txtPhone").value;
+
+			if(email == "" || phone == ""){
+				alert("Заполните все поля!");
+				return;
+			}
+
+			var userinfo = new UserInfo();
+			userinfo.email = email;
+			userinfo.phone = phone;
+
+			var request = getXmlHttpRequest();
+			request.open("POST", "auth.php", true);
+			request.onreadystatechange = function(){
+				if(request.readyState != 4) return;
+
+				validate = JSON.parse(request.responseText);
+				if(!validate){
+					console.log("Неправильный email или Телефон!");
+				} else {
+					document.getElementById("frmLogin").style.display = "";
+					document.body.style.backgroundColor = "";
+					console.log("Всё ок. Валидация пройдена!");
+				}
+			};
+			request.setRequestHeader("Content-Type", "text/plain");
+			request.send(JSON.stringify(userinfo));
+		}
+	</script>
+</head>
+<body>
+	<h1>Тестовое задание Кравченко Д.А.</h1>
+	<h2>Задача 1</h2>
+	<!-- Слайдер типа "Карусель" -->
+	<div class="view">
+		<ul>
+			<li><img id="img" src="img/red.gif" alt="myImgAlt 1"></li>
+			<li><img src="img/green.gif" alt="myImgAlt 2"></li>
+			<li><img src="img/blue.gif" alt="myImgAlt 3"></li>
+			<li><img src="img/yellow.gif" alt="myImgAlt 4"></li>
+		</ul>
+	</div>
+	<div id="show">
+		<button class="btn btn-primary" id="prev">< Назад</button>
+		<button class="btn btn-primary" id="next">Вперед ></button>
+	</div>
+	<h2>Задача 2</h2>
+	<!-- Форма валидации -->
+	<form class="form-group" action="#" id="frmLogin" onsubmit="return false" class="block">
+		<h3 class="text-center">Валидация данных</h3>
+		<div>
+			<label for="txtEmail">Email</label>
+			<input class="form-control" id="txtEmail" type="text" />
+		</div>
+		<div>
+			<label for="txtPhone">Телефон</label>
+			<input class="form-control" id="txtPhone" type="text" />
+		</div>
+		<button class="btn btn-danger" onclick="validateUser()">Проверить</button>
+	</form>
+	<button class="btn btn-danger" onclick="showLoginForm()">Вход</button>
+	<script src="/lib/js/slide-show.js"></script>
+</body>
+</html>
